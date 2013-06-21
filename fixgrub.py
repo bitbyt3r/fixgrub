@@ -2,7 +2,8 @@
 import os
 import shutil
 
-GRUB_CONF = "./menu.lst"
+GRUB_CONF = "/boot/grub/grub.conf"
+BACKUP_FILE = "/boot/grub/grub.conf.old"
 TMP_FILE = "/tmp/menu.lst.tmp"
 
 with open(GRUB_CONF, "r") as confFile:
@@ -78,4 +79,5 @@ with open(TMP_FILE, "w") as temp:
     temp.write(i+"\n")
 
 if os.system("diff "+TMP_FILE+" "+GRUB_CONF):
+  shutil.copy(GRUB_CONF, BACKUP_FILE)
   shutil.copy(TMP_FILE, GRUB_CONF)
